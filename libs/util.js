@@ -12,7 +12,17 @@ const callbackMockupFactory = (functionName, pattern) => {
     };
 };
 
+const promiseMockupFactory = (functionName, pattern) => {
+    return (str, delay) => new Promise((resolve, reject) => {
+        let returnValue = pattern.replace('{str}', str);
+        let timeout = delay || getRandomArbitrary(500, 2000);
+        console.log(functionName, 'takes', timeout, 'ms');
+        setTimeout(resolve.bind(null, returnValue), timeout);
+    });
+};
+
 module.exports = {
-    callbackMockupFactory: callbackMockupFactory,
     getRandomArbitrary: getRandomArbitrary,
+    callbackMockupFactory: callbackMockupFactory,
+    promiseMockupFactory: promiseMockupFactory,
 };
